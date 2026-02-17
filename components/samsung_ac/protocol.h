@@ -102,6 +102,12 @@ namespace esphome
             virtual void set_outdoor_voltage(const std::string &address, float value) = 0;
             virtual void set_outdoor_operation_odu_mode_text_sensor(const std::string &address, int value) = 0;
             virtual void set_outdoor_operation_heatcool_text_sensor(const std::string &address, int value) = 0;
+            virtual void set_dhw_valve_direction(const std::string address, int value) = 0;
+            virtual void set_dhw_disinfection_day(const std::string address, int value) = 0;
+            virtual void set_dhw_disinfection_start_time(const std::string address, int value) = 0;
+            virtual void set_dhw_disinfection_target_temp(const std::string address, float value) = 0;
+            virtual void set_dhw_disinfection_duration(const std::string address, int value) = 0;
+            virtual void set_dhw_disinfection_max_time(const std::string address, int value) = 0;
         };
 
         struct ProtocolRequest
@@ -118,6 +124,12 @@ namespace esphome
             optional<FanMode> fan_mode;
             optional<SwingMode> swing_mode;
             optional<AltMode> alt_mode;
+            optional<int> dhw_valve_direction;
+            optional<int> dhw_disinfection_day;
+            optional<int> dhw_disinfection_start_time;
+            optional<float> dhw_disinfection_target_temp;
+            optional<int> dhw_disinfection_duration;
+            optional<int> dhw_disinfection_max_time;
         };
 
         class Protocol

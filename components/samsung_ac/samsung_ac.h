@@ -267,6 +267,37 @@ namespace esphome
                                  { dev->update_enum_text(0x8003, value); });
       }
 
+      void set_dhw_valve_direction(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_valve_direction(value); });
+      }
+      void set_dhw_disinfection_day(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_disinfection_day(value); });
+      }
+      void set_dhw_disinfection_start_time(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_disinfection_start_time(value); });
+      }
+      void set_dhw_disinfection_target_temp(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_disinfection_target_temp(value); });
+      }
+      void set_dhw_disinfection_duration(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_disinfection_duration(value); });
+      }
+      void set_dhw_disinfection_max_time(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_disinfection_max_time(value); });
+      }
+
     protected:
       Samsung_AC_Device *find_device(const std::string &address)
       {

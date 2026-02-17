@@ -589,6 +589,48 @@ namespace esphome
                     packet.messages.push_back(lr_swing);
                 }
 
+                if (request.dhw_valve_direction)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_dhw_valve_direction);
+                    msg.value = request.dhw_valve_direction.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_disinfection_day)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_dhw_disinfection_day);
+                    msg.value = request.dhw_disinfection_day.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_disinfection_start_time)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_disinfection_start_time);
+                    msg.value = request.dhw_disinfection_start_time.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_disinfection_target_temp)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_disinfection_target_temp);
+                    msg.value = request.dhw_disinfection_target_temp.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_disinfection_duration)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_disinfection_duration);
+                    msg.value = request.dhw_disinfection_duration.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_disinfection_max_time)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_disinfection_max_time);
+                    msg.value = request.dhw_disinfection_max_time.value();
+                    packet.messages.push_back(msg);
+                }
+
                 if (packet.messages.size() == 0)
                     continue;
 
@@ -641,6 +683,19 @@ namespace esphome
 
             if (request.swing_mode)
                 queued.swing_mode = request.swing_mode;
+
+            if (request.dhw_valve_direction)
+                queued.dhw_valve_direction = request.dhw_valve_direction;
+            if (request.dhw_disinfection_day)
+                queued.dhw_disinfection_day = request.dhw_disinfection_day;
+            if (request.dhw_disinfection_start_time)
+                queued.dhw_disinfection_start_time = request.dhw_disinfection_start_time;
+            if (request.dhw_disinfection_target_temp)
+                queued.dhw_disinfection_target_temp = request.dhw_disinfection_target_temp;
+            if (request.dhw_disinfection_duration)
+                queued.dhw_disinfection_duration = request.dhw_disinfection_duration;
+            if (request.dhw_disinfection_max_time)
+                queued.dhw_disinfection_max_time = request.dhw_disinfection_max_time;
         }
 
         Mode operation_mode_to_mode(int value)
@@ -937,6 +992,43 @@ namespace esphome
                 double value = static_cast<double>(message.value);
                 LOG_MESSAGE(LVAR_NM_OUT_SENSOR_VOLTAGE, value, source, dest);
                 target->set_outdoor_voltage(source, value);
+                break;
+            }
+            case MessageNumber::ENUM_in_dhw_valve_direction:
+            {
+                LOG_MESSAGE(ENUM_in_dhw_valve_direction, (double)message.value, source, dest);
+                target->set_dhw_valve_direction(source, message.value);
+                break;
+            }
+            case MessageNumber::ENUM_in_dhw_disinfection_day:
+            {
+                LOG_MESSAGE(ENUM_in_dhw_disinfection_day, (double)message.value, source, dest);
+                target->set_dhw_disinfection_day(source, message.value);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_disinfection_start_time:
+            {
+                LOG_MESSAGE(VAR_in_dhw_disinfection_start_time, (double)message.value, source, dest);
+                target->set_dhw_disinfection_start_time(source, message.value);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_disinfection_target_temp:
+            {
+                double temp = (double)message.value / 10.0;
+                LOG_MESSAGE(VAR_in_dhw_disinfection_target_temp, temp, source, dest);
+                target->set_dhw_disinfection_target_temp(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_disinfection_duration:
+            {
+                LOG_MESSAGE(VAR_in_dhw_disinfection_duration, (double)message.value, source, dest);
+                target->set_dhw_disinfection_duration(source, message.value);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_disinfection_max_time:
+            {
+                LOG_MESSAGE(VAR_in_dhw_disinfection_max_time, (double)message.value, source, dest);
+                target->set_dhw_disinfection_max_time(source, message.value);
                 break;
             }
             case MessageNumber::VAR_IN_FSV_3021:

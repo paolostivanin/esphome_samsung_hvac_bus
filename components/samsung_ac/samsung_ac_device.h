@@ -81,6 +81,32 @@ namespace esphome
       std::function<void(WaterHeaterMode)> write_state_;
     };
 
+    class Samsung_AC_Generic_Select : public select::Select
+    {
+    public:
+      void publish_state_by_index(int index)
+      {
+        const auto &options = this->traits.get_options();
+        if (index >= 0 && index < (int)options.size())
+        {
+          this->publish_state(options[index]);
+        }
+      }
+
+      void control(const std::string &value) override
+      {
+        const auto &options = this->traits.get_options();
+        auto it = std::find(options.begin(), options.end(), value);
+        if (it != options.end())
+        {
+          int index = std::distance(options.begin(), it);
+          write_state_(index);
+        }
+      }
+
+      std::function<void(int)> write_state_;
+    };
+
     class Samsung_AC_Switch : public switch_::Switch
     {
     public:
@@ -139,6 +165,12 @@ namespace esphome
       Samsung_AC_Mode_Select *mode{nullptr};
       Samsung_AC_Water_Heater_Mode_Select *waterheatermode{nullptr};
       Samsung_AC_Climate *climate{nullptr};
+      Samsung_AC_Generic_Select *dhw_valve_direction_select_{nullptr};
+      Samsung_AC_Generic_Select *dhw_disinfection_day_select_{nullptr};
+      Samsung_AC_Number *dhw_disinfection_start_time_number_{nullptr};
+      Samsung_AC_Number *dhw_disinfection_target_temp_number_{nullptr};
+      Samsung_AC_Number *dhw_disinfection_duration_number_{nullptr};
+      Samsung_AC_Number *dhw_disinfection_max_time_number_{nullptr};
       std::map<uint16_t, sensor::Sensor *> custom_sensor_map;
       float room_temperature_offset{0};
 
@@ -288,6 +320,72 @@ namespace esphome
         };
       }
 
+      void set_dhw_valve_direction_select(Samsung_AC_Generic_Select *select)
+      {
+        dhw_valve_direction_select_ = select;
+        dhw_valve_direction_select_->write_state_ = [this](int value)
+        {
+          ProtocolRequest request;
+          request.dhw_valve_direction = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_disinfection_day_select(Samsung_AC_Generic_Select *select)
+      {
+        dhw_disinfection_day_select_ = select;
+        dhw_disinfection_day_select_->write_state_ = [this](int value)
+        {
+          ProtocolRequest request;
+          request.dhw_disinfection_day = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_disinfection_start_time_number(Samsung_AC_Number *number)
+      {
+        dhw_disinfection_start_time_number_ = number;
+        dhw_disinfection_start_time_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_disinfection_start_time = (int)value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_disinfection_target_temp_number(Samsung_AC_Number *number)
+      {
+        dhw_disinfection_target_temp_number_ = number;
+        dhw_disinfection_target_temp_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_disinfection_target_temp = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_disinfection_duration_number(Samsung_AC_Number *number)
+      {
+        dhw_disinfection_duration_number_ = number;
+        dhw_disinfection_duration_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_disinfection_duration = (int)value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_disinfection_max_time_number(Samsung_AC_Number *number)
+      {
+        dhw_disinfection_max_time_number_ = number;
+        dhw_disinfection_max_time_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_disinfection_max_time = (int)value;
+          publish_request(request);
+        };
+      }
+
       void set_target_temperature_number(Samsung_AC_Number *number)
       {
         target_temperature = number;
@@ -349,6 +447,42 @@ namespace esphome
       {
         if (target_water_temperature != nullptr)
           target_water_temperature->publish_state(value);
+      }
+
+      void update_dhw_valve_direction(int value)
+      {
+        if (dhw_valve_direction_select_ != nullptr)
+          dhw_valve_direction_select_->publish_state_by_index(value);
+      }
+
+      void update_dhw_disinfection_day(int value)
+      {
+        if (dhw_disinfection_day_select_ != nullptr)
+          dhw_disinfection_day_select_->publish_state_by_index(value);
+      }
+
+      void update_dhw_disinfection_start_time(int value)
+      {
+        if (dhw_disinfection_start_time_number_ != nullptr)
+          dhw_disinfection_start_time_number_->publish_state(value);
+      }
+
+      void update_dhw_disinfection_target_temp(float value)
+      {
+        if (dhw_disinfection_target_temp_number_ != nullptr)
+          dhw_disinfection_target_temp_number_->publish_state(value);
+      }
+
+      void update_dhw_disinfection_duration(int value)
+      {
+        if (dhw_disinfection_duration_number_ != nullptr)
+          dhw_disinfection_duration_number_->publish_state(value);
+      }
+
+      void update_dhw_disinfection_max_time(int value)
+      {
+        if (dhw_disinfection_max_time_number_ != nullptr)
+          dhw_disinfection_max_time_number_->publish_state(value);
       }
 
       optional<bool> _cur_power;

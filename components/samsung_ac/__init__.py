@@ -41,6 +41,9 @@ Samsung_AC_Mode_Select = samsung_ac.class_("Samsung_AC_Mode_Select", select.Sele
 Samsung_AC_Water_Heater_Mode_Select = samsung_ac.class_(
     "Samsung_AC_Water_Heater_Mode_Select", select.Select
 )
+Samsung_AC_Generic_Select = samsung_ac.class_(
+    "Samsung_AC_Generic_Select", select.Select
+)
 Samsung_AC_Number = samsung_ac.class_("Samsung_AC_Number", number.Number)
 Samsung_AC_Climate = samsung_ac.class_("Samsung_AC_Climate", climate.Climate)
 
@@ -49,6 +52,8 @@ SELECT_MODE_SCHEMA = select.select_schema(Samsung_AC_Mode_Select)
 SELECT_WATER_HEATER_MODE_SCHEMA = select.select_schema(
     Samsung_AC_Water_Heater_Mode_Select
 )
+
+SELECT_GENERIC_SCHEMA = select.select_schema(Samsung_AC_Generic_Select)
 
 NUMBER_SCHEMA = number.number_schema(Samsung_AC_Number).extend(
     {cv.GenerateID(): cv.declare_id(Samsung_AC_Number)}
@@ -98,6 +103,16 @@ CONF_PRESET_VALUE = "value"
 
 CONF_DEVICE_OUT_OPERATION_ODU_MODE_TEXT = "outdoor_operation_odu_mode"
 CONF_DEVICE_OUT_OPERATION_HEATCOOL_TEXT = "outdoor_operation_heatcool"
+
+CONF_DEVICE_FLOW_TEMP_OUT = "flow_temp_out"
+CONF_DEVICE_FLOW_TEMP_RETURN = "flow_temp_return"
+CONF_DEVICE_WATER_FLOW = "water_flow"
+CONF_DEVICE_DHW_VALVE_DIRECTION = "dhw_valve_direction"
+CONF_DEVICE_DHW_DISINFECTION_DAY = "dhw_disinfection_day"
+CONF_DEVICE_DHW_DISINFECTION_START_TIME = "dhw_disinfection_start_time"
+CONF_DEVICE_DHW_DISINFECTION_TARGET_TEMP = "dhw_disinfection_target_temp"
+CONF_DEVICE_DHW_DISINFECTION_DURATION = "dhw_disinfection_duration"
+CONF_DEVICE_DHW_DISINFECTION_MAX_TIME = "dhw_disinfection_max_time"
 
 
 def preset_entry(name: str, value: int, displayName: str):
@@ -320,13 +335,34 @@ DEVICE_SCHEMA = cv.Schema(
             icon="mdi:thermometer",
             entity_category="diagnostic",
         ),
-
+        # DHW / Hydrobox read-only sensors
+        cv.Optional(CONF_DEVICE_FLOW_TEMP_OUT): temperature_sensor_schema(0x4238),
+        cv.Optional(CONF_DEVICE_FLOW_TEMP_RETURN): temperature_sensor_schema(0x4236),
+        cv.Optional(CONF_DEVICE_WATER_FLOW): custom_sensor_schema(
+            message=0x42E9,
+            unit_of_measurement="L/min",
+            accuracy_decimals=1,
+            icon="mdi:water-pump",
+            state_class=STATE_CLASS_MEASUREMENT,
+            raw_filters=[{"multiply": 0.1}],
+        ),
+        # DHW / Hydrobox writable selects
+        cv.Optional(CONF_DEVICE_DHW_VALVE_DIRECTION): SELECT_GENERIC_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_DISINFECTION_DAY): SELECT_GENERIC_SCHEMA,
+        # DHW / Hydrobox writable numbers
+        cv.Optional(CONF_DEVICE_DHW_DISINFECTION_START_TIME): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_DISINFECTION_TARGET_TEMP): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_DISINFECTION_DURATION): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_DISINFECTION_MAX_TIME): NUMBER_SCHEMA,
     }
 )
 
 CUSTOM_SENSOR_KEYS = [
     CONF_DEVICE_WATER_TEMPERATURE,
     CONF_DEVICE_ROOM_HUMIDITY,
+    CONF_DEVICE_FLOW_TEMP_OUT,
+    CONF_DEVICE_FLOW_TEMP_RETURN,
+    CONF_DEVICE_WATER_FLOW,
 ]
 
 CONF_DEVICES = "devices"
@@ -555,6 +591,48 @@ async def to_code(config):
             values = ["Eco", "Standard", "Power", "Force"]
             sel = await select.new_select(conf, options=values)
             cg.add(var_dev.set_water_heater_mode_select(sel))
+
+        if CONF_DEVICE_DHW_VALVE_DIRECTION in device:
+            conf = device[CONF_DEVICE_DHW_VALVE_DIRECTION]
+            values = ["Room", "Tank"]
+            sel = await select.new_select(conf, options=values)
+            cg.add(var_dev.set_dhw_valve_direction_select(sel))
+
+        if CONF_DEVICE_DHW_DISINFECTION_DAY in device:
+            conf = device[CONF_DEVICE_DHW_DISINFECTION_DAY]
+            values = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Everyday"]
+            sel = await select.new_select(conf, options=values)
+            cg.add(var_dev.set_dhw_disinfection_day_select(sel))
+
+        if CONF_DEVICE_DHW_DISINFECTION_START_TIME in device:
+            conf = device[CONF_DEVICE_DHW_DISINFECTION_START_TIME]
+            num = await number.new_number(
+                conf, min_value=0, max_value=23, step=1
+            )
+            cg.add(var_dev.set_dhw_disinfection_start_time_number(num))
+
+        if CONF_DEVICE_DHW_DISINFECTION_TARGET_TEMP in device:
+            conf = device[CONF_DEVICE_DHW_DISINFECTION_TARGET_TEMP]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=40.0, max_value=80.0, step=1.0
+            )
+            cg.add(var_dev.set_dhw_disinfection_target_temp_number(num))
+
+        if CONF_DEVICE_DHW_DISINFECTION_DURATION in device:
+            conf = device[CONF_DEVICE_DHW_DISINFECTION_DURATION]
+            num = await number.new_number(
+                conf, min_value=0, max_value=120, step=1
+            )
+            cg.add(var_dev.set_dhw_disinfection_duration_number(num))
+
+        if CONF_DEVICE_DHW_DISINFECTION_MAX_TIME in device:
+            conf = device[CONF_DEVICE_DHW_DISINFECTION_MAX_TIME]
+            num = await number.new_number(
+                conf, min_value=0, max_value=1440, step=1
+            )
+            cg.add(var_dev.set_dhw_disinfection_max_time_number(num))
 
         if CONF_DEVICE_CLIMATE in device:
             conf = device[CONF_DEVICE_CLIMATE]

@@ -99,6 +99,17 @@ namespace esphome
             VAR_in_temp_water_tank_f = 0x4237,
             VAR_in_temp_water_outlet_target_f = 0x4247,
 
+            // DHW / Hydrobox sensors and settings
+            VAR_in_temp_flow_out = 0x4238,
+            VAR_in_temp_flow_return = 0x4236,
+            VAR_in_water_flow = 0x42E9,
+            ENUM_in_dhw_valve_direction = 0x4067,
+            ENUM_in_dhw_disinfection_day = 0x409A,
+            VAR_in_dhw_disinfection_start_time = 0x4269,
+            VAR_in_dhw_disinfection_target_temp = 0x426A,
+            VAR_in_dhw_disinfection_duration = 0x426B,
+            VAR_in_dhw_disinfection_max_time = 0x42CE,
+
             VAR_out_sensor_airout = 0x8204,
             VAR_OUT_SENSOR_CT1 = 0x8217,
 

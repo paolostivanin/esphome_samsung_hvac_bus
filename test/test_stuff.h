@@ -253,6 +253,31 @@ public:
         last_set_error_code_value = error_code;
     }
 
+    void set_dhw_valve_direction(const std::string address, int value) override
+    {
+        cout << "> " << address << " set_dhw_valve_direction=" << to_string(value) << endl;
+    }
+    void set_dhw_disinfection_day(const std::string address, int value) override
+    {
+        cout << "> " << address << " set_dhw_disinfection_day=" << to_string(value) << endl;
+    }
+    void set_dhw_disinfection_start_time(const std::string address, int value) override
+    {
+        cout << "> " << address << " set_dhw_disinfection_start_time=" << to_string(value) << endl;
+    }
+    void set_dhw_disinfection_target_temp(const std::string address, float value) override
+    {
+        cout << "> " << address << " set_dhw_disinfection_target_temp=" << to_string(value) << endl;
+    }
+    void set_dhw_disinfection_duration(const std::string address, int value) override
+    {
+        cout << "> " << address << " set_dhw_disinfection_duration=" << to_string(value) << endl;
+    }
+    void set_dhw_disinfection_max_time(const std::string address, int value) override
+    {
+        cout << "> " << address << " set_dhw_disinfection_max_time=" << to_string(value) << endl;
+    }
+
         void assert_only_address(const std::string address)
         {
             assert(last_register_address == address);

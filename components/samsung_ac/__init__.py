@@ -104,6 +104,8 @@ CONF_PRESET_VALUE = "value"
 CONF_DEVICE_OUT_OPERATION_ODU_MODE_TEXT = "outdoor_operation_odu_mode"
 CONF_DEVICE_OUT_OPERATION_HEATCOOL_TEXT = "outdoor_operation_heatcool"
 
+CONF_DEVICE_EVA_IN_TEMP = "eva_in_temp"
+CONF_DEVICE_EVA_OUT_TEMP = "eva_out_temp"
 CONF_DEVICE_FLOW_TEMP_OUT = "flow_temp_out"
 CONF_DEVICE_FLOW_TEMP_RETURN = "flow_temp_return"
 CONF_DEVICE_WATER_FLOW = "water_flow"
@@ -335,6 +337,9 @@ DEVICE_SCHEMA = cv.Schema(
             icon="mdi:thermometer",
             entity_category="diagnostic",
         ),
+        # EVA temperature sensors (read-only)
+        cv.Optional(CONF_DEVICE_EVA_IN_TEMP): temperature_sensor_schema(0x4205),
+        cv.Optional(CONF_DEVICE_EVA_OUT_TEMP): temperature_sensor_schema(0x4206),
         # DHW / Hydrobox read-only sensors
         cv.Optional(CONF_DEVICE_FLOW_TEMP_OUT): temperature_sensor_schema(0x4238),
         cv.Optional(CONF_DEVICE_FLOW_TEMP_RETURN): temperature_sensor_schema(0x4236),
@@ -360,6 +365,8 @@ DEVICE_SCHEMA = cv.Schema(
 CUSTOM_SENSOR_KEYS = [
     CONF_DEVICE_WATER_TEMPERATURE,
     CONF_DEVICE_ROOM_HUMIDITY,
+    CONF_DEVICE_EVA_IN_TEMP,
+    CONF_DEVICE_EVA_OUT_TEMP,
     CONF_DEVICE_FLOW_TEMP_OUT,
     CONF_DEVICE_FLOW_TEMP_RETURN,
     CONF_DEVICE_WATER_FLOW,

@@ -114,8 +114,8 @@ CONF_DEVICE_OUT_OPERATION_HEATCOOL_TEXT = "outdoor_operation_heatcool"
 
 CONF_DEVICE_EVA_IN_TEMP = "eva_in_temp"
 CONF_DEVICE_EVA_OUT_TEMP = "eva_out_temp"
-CONF_DEVICE_FLOW_TEMP_OUT = "flow_temp_out"
-CONF_DEVICE_FLOW_TEMP_RETURN = "flow_temp_return"
+CONF_DEVICE_PHE_OUT_WATER_OUT = "phe_out_water_out"
+CONF_DEVICE_PHE_IN_WATER_RETURN = "phe_in_water_return"
 CONF_DEVICE_WATER_FLOW = "water_flow"
 CONF_DEVICE_DHW_VALVE_DIRECTION = "dhw_valve_direction"
 CONF_DEVICE_DHW_DISINFECTION_DAY = "dhw_disinfection_day"
@@ -356,8 +356,8 @@ DEVICE_SCHEMA = cv.Schema(
         cv.Optional(CONF_DEVICE_EVA_IN_TEMP): temperature_sensor_schema(0x4205),
         cv.Optional(CONF_DEVICE_EVA_OUT_TEMP): temperature_sensor_schema(0x4206),
         # DHW / Hydrobox read-only sensors
-        cv.Optional(CONF_DEVICE_FLOW_TEMP_OUT): temperature_sensor_schema(0x4238),
-        cv.Optional(CONF_DEVICE_FLOW_TEMP_RETURN): temperature_sensor_schema(0x4236),
+        cv.Optional(CONF_DEVICE_PHE_OUT_WATER_OUT): temperature_sensor_schema(0x4238),
+        cv.Optional(CONF_DEVICE_PHE_IN_WATER_RETURN): temperature_sensor_schema(0x4236),
         cv.Optional(CONF_DEVICE_WATER_FLOW): custom_sensor_schema(
             message=0x42E9,
             unit_of_measurement="L/min",
@@ -382,8 +382,8 @@ CUSTOM_SENSOR_KEYS = [
     CONF_DEVICE_ROOM_HUMIDITY,
     CONF_DEVICE_EVA_IN_TEMP,
     CONF_DEVICE_EVA_OUT_TEMP,
-    CONF_DEVICE_FLOW_TEMP_OUT,
-    CONF_DEVICE_FLOW_TEMP_RETURN,
+    CONF_DEVICE_PHE_OUT_WATER_OUT,
+    CONF_DEVICE_PHE_IN_WATER_RETURN,
     CONF_DEVICE_WATER_FLOW,
 ]
 

@@ -99,16 +99,60 @@ namespace esphome
             VAR_in_temp_water_tank_f = 0x4237,
             VAR_in_temp_water_outlet_target_f = 0x4247,
 
+            ENUM_in_defrost_status = 0x402E,
+            ENUM_in_silence_mode = 0x4046,
+
             // DHW / Hydrobox sensors and settings
             VAR_in_temp_flow_out = 0x4238,
             VAR_in_temp_flow_return = 0x4236,
             VAR_in_water_flow = 0x42E9,
             ENUM_in_dhw_valve_direction = 0x4067,
             ENUM_in_dhw_disinfection_day = 0x409A,
+            ENUM_in_booster_heater = 0x4087,
+            ENUM_in_state_water_pump = 0x4089,
             VAR_in_dhw_disinfection_start_time = 0x4269,
             VAR_in_dhw_disinfection_target_temp = 0x426A,
             VAR_in_dhw_disinfection_duration = 0x426B,
             VAR_in_dhw_disinfection_max_time = 0x42CE,
+
+
+            // Water law
+            VAR_in_temp_water_law_target_f = 0x4248,
+            VAR_in_temp_water_law_f = 0x427F,
+
+            // Heating water outlet temp limits
+            VAR_in_heating_water_outlet_upper = 0x424E,
+            VAR_in_heating_water_outlet_lower = 0x424F,
+
+            // Heating outdoor temp / water law curve
+            VAR_in_heating_lower_outdoor_temp = 0x4254,
+            VAR_in_heating_upper_outdoor_temp = 0x4255,
+            VAR_in_heating_water_temp_cold_outdoor = 0x4256,
+            VAR_in_heating_water_temp_warm_outdoor = 0x4257,
+
+            // DHW tank temp limits
+            VAR_in_dhw_tank_temp_upper = 0x4252,
+            VAR_in_dhw_tank_temp_lower = 0x4253,
+
+            // DHW operation / booster / disinfection / forced operation
+            ENUM_in_dhw_operation_mode = 0x4097,
+            ENUM_in_dhw_booster_heater = 0x4098,
+            ENUM_in_dhw_disinfection_enable = 0x4099,
+            ENUM_in_dhw_forced_operation_timer = 0x409B,
+            VAR_in_dhw_booster_heater_delay = 0x4266,
+            VAR_in_dhw_booster_heater_overshoot = 0x4267,
+            VAR_in_dhw_forced_operation_time = 0x426C,
+
+            // Heating priority / inverter pump
+            ENUM_in_heating_dhw_priority = 0x409E,
+            ENUM_in_heating_inverter_pump_application = 0x40C2,
+            VAR_in_heating_priority_changeover_temp = 0x426D,
+            VAR_in_heating_dhw_off_outdoor_temp = 0x426E,
+            VAR_in_heating_inverter_pump_target_delta = 0x428A,
+
+            // Indoor power / energy
+            VAR_in_indoor_power_consumption = 0x4284,
+            LVAR_in_generated_power_last_minute = 0x4426,
 
             VAR_out_sensor_airout = 0x8204,
             VAR_OUT_SENSOR_CT1 = 0x8217,

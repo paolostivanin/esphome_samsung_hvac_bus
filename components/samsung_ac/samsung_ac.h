@@ -297,6 +297,131 @@ namespace esphome
         execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
                                  { dev->update_dhw_disinfection_max_time(value); });
       }
+      void set_silence_mode(const std::string address, bool value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_silence_mode(value); });
+      }
+      void set_water_law_target_temp_shift(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_water_law_target_temp_shift(value); });
+      }
+      void set_heating_water_outlet_upper(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_water_outlet_upper(value); });
+      }
+      void set_heating_water_outlet_lower(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_water_outlet_lower(value); });
+      }
+      void set_heating_lower_outdoor_temp(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_lower_outdoor_temp(value); });
+      }
+      void set_heating_upper_outdoor_temp(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_upper_outdoor_temp(value); });
+      }
+      void set_heating_water_temp_cold_outdoor(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_water_temp_cold_outdoor(value); });
+      }
+      void set_heating_water_temp_warm_outdoor(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_water_temp_warm_outdoor(value); });
+      }
+      void set_heating_dhw_priority(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_dhw_priority(value); });
+      }
+      void set_heating_inverter_pump_application(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_inverter_pump_application(value); });
+      }
+      void set_heating_inverter_pump_target_delta(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_inverter_pump_target_delta(value); });
+      }
+      void set_dhw_tank_temp_upper(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_tank_temp_upper(value); });
+      }
+      void set_dhw_tank_temp_lower(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_tank_temp_lower(value); });
+      }
+      void set_dhw_operation_mode(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_operation_mode(value); });
+      }
+      void set_hp_max_temp_alone(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_hp_max_temp_alone(value); });
+      }
+      void set_hp_temp_diff_off(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_hp_temp_diff_off(value); });
+      }
+      void set_hp_temp_diff_on(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_hp_temp_diff_on(value); });
+      }
+      void set_dhw_booster_heater(const std::string address, bool value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_booster_heater(value); });
+      }
+      void set_dhw_booster_heater_delay(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_booster_heater_delay(value); });
+      }
+      void set_dhw_booster_heater_overshoot(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_booster_heater_overshoot(value); });
+      }
+      void set_dhw_disinfection_enable(const std::string address, bool value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_disinfection_enable(value); });
+      }
+      void set_dhw_forced_operation_timer(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_forced_operation_timer(value); });
+      }
+      void set_dhw_forced_operation_time(const std::string address, int value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_dhw_forced_operation_time(value); });
+      }
+      void set_heating_priority_changeover_temp(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_priority_changeover_temp(value); });
+      }
+      void set_heating_dhw_off_outdoor_temp(const std::string address, float value) override
+      {
+        execute_if_device_exists(address, [value](Samsung_AC_Device *dev)
+                                 { dev->update_heating_dhw_off_outdoor_temp(value); });
+      }
 
     protected:
       Samsung_AC_Device *find_device(const std::string &address)

@@ -171,6 +171,31 @@ namespace esphome
       Samsung_AC_Number *dhw_disinfection_target_temp_number_{nullptr};
       Samsung_AC_Number *dhw_disinfection_duration_number_{nullptr};
       Samsung_AC_Number *dhw_disinfection_max_time_number_{nullptr};
+      Samsung_AC_Switch *silence_mode_{nullptr};
+      Samsung_AC_Number *water_law_target_temp_shift_number_{nullptr};
+      Samsung_AC_Number *heating_water_outlet_upper_number_{nullptr};
+      Samsung_AC_Number *heating_water_outlet_lower_number_{nullptr};
+      Samsung_AC_Number *heating_lower_outdoor_temp_number_{nullptr};
+      Samsung_AC_Number *heating_upper_outdoor_temp_number_{nullptr};
+      Samsung_AC_Number *heating_water_temp_cold_outdoor_number_{nullptr};
+      Samsung_AC_Number *heating_water_temp_warm_outdoor_number_{nullptr};
+      Samsung_AC_Generic_Select *heating_dhw_priority_select_{nullptr};
+      Samsung_AC_Generic_Select *heating_inverter_pump_application_select_{nullptr};
+      Samsung_AC_Number *heating_inverter_pump_target_delta_number_{nullptr};
+      Samsung_AC_Number *dhw_tank_temp_upper_number_{nullptr};
+      Samsung_AC_Number *dhw_tank_temp_lower_number_{nullptr};
+      Samsung_AC_Generic_Select *dhw_operation_mode_select_{nullptr};
+      Samsung_AC_Number *hp_max_temp_alone_number_{nullptr};
+      Samsung_AC_Number *hp_temp_diff_off_number_{nullptr};
+      Samsung_AC_Number *hp_temp_diff_on_number_{nullptr};
+      Samsung_AC_Switch *dhw_booster_heater_{nullptr};
+      Samsung_AC_Number *dhw_booster_heater_delay_number_{nullptr};
+      Samsung_AC_Number *dhw_booster_heater_overshoot_number_{nullptr};
+      Samsung_AC_Switch *dhw_disinfection_enable_{nullptr};
+      Samsung_AC_Generic_Select *dhw_forced_operation_timer_select_{nullptr};
+      Samsung_AC_Number *dhw_forced_operation_time_number_{nullptr};
+      Samsung_AC_Number *heating_priority_changeover_temp_number_{nullptr};
+      Samsung_AC_Number *heating_dhw_off_outdoor_temp_number_{nullptr};
       std::map<uint16_t, sensor::Sensor *> custom_sensor_map;
       float room_temperature_offset{0};
 
@@ -386,6 +411,281 @@ namespace esphome
         };
       }
 
+      void set_silence_mode_switch(Samsung_AC_Switch *switch_)
+      {
+        silence_mode_ = switch_;
+        silence_mode_->write_state_ = [this](bool value)
+        {
+          ProtocolRequest request;
+          request.silence_mode = value;
+          publish_request(request);
+        };
+      }
+
+      void set_water_law_target_temp_shift_number(Samsung_AC_Number *number)
+      {
+        water_law_target_temp_shift_number_ = number;
+        water_law_target_temp_shift_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.water_law_target_temp_shift = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_water_outlet_upper_number(Samsung_AC_Number *number)
+      {
+        heating_water_outlet_upper_number_ = number;
+        heating_water_outlet_upper_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_water_outlet_upper = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_water_outlet_lower_number(Samsung_AC_Number *number)
+      {
+        heating_water_outlet_lower_number_ = number;
+        heating_water_outlet_lower_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_water_outlet_lower = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_lower_outdoor_temp_number(Samsung_AC_Number *number)
+      {
+        heating_lower_outdoor_temp_number_ = number;
+        heating_lower_outdoor_temp_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_lower_outdoor_temp = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_upper_outdoor_temp_number(Samsung_AC_Number *number)
+      {
+        heating_upper_outdoor_temp_number_ = number;
+        heating_upper_outdoor_temp_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_upper_outdoor_temp = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_water_temp_cold_outdoor_number(Samsung_AC_Number *number)
+      {
+        heating_water_temp_cold_outdoor_number_ = number;
+        heating_water_temp_cold_outdoor_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_water_temp_cold_outdoor = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_water_temp_warm_outdoor_number(Samsung_AC_Number *number)
+      {
+        heating_water_temp_warm_outdoor_number_ = number;
+        heating_water_temp_warm_outdoor_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_water_temp_warm_outdoor = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_dhw_priority_select(Samsung_AC_Generic_Select *select)
+      {
+        heating_dhw_priority_select_ = select;
+        heating_dhw_priority_select_->write_state_ = [this](int value)
+        {
+          ProtocolRequest request;
+          request.heating_dhw_priority = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_inverter_pump_application_select(Samsung_AC_Generic_Select *select)
+      {
+        heating_inverter_pump_application_select_ = select;
+        heating_inverter_pump_application_select_->write_state_ = [this](int value)
+        {
+          ProtocolRequest request;
+          request.heating_inverter_pump_application = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_inverter_pump_target_delta_number(Samsung_AC_Number *number)
+      {
+        heating_inverter_pump_target_delta_number_ = number;
+        heating_inverter_pump_target_delta_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_inverter_pump_target_delta = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_tank_temp_upper_number(Samsung_AC_Number *number)
+      {
+        dhw_tank_temp_upper_number_ = number;
+        dhw_tank_temp_upper_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_tank_temp_upper = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_tank_temp_lower_number(Samsung_AC_Number *number)
+      {
+        dhw_tank_temp_lower_number_ = number;
+        dhw_tank_temp_lower_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_tank_temp_lower = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_operation_mode_select(Samsung_AC_Generic_Select *select)
+      {
+        dhw_operation_mode_select_ = select;
+        dhw_operation_mode_select_->write_state_ = [this](int value)
+        {
+          ProtocolRequest request;
+          request.dhw_operation_mode = value;
+          publish_request(request);
+        };
+      }
+
+      void set_hp_max_temp_alone_number(Samsung_AC_Number *number)
+      {
+        hp_max_temp_alone_number_ = number;
+        hp_max_temp_alone_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.hp_max_temp_alone = value;
+          publish_request(request);
+        };
+      }
+
+      void set_hp_temp_diff_off_number(Samsung_AC_Number *number)
+      {
+        hp_temp_diff_off_number_ = number;
+        hp_temp_diff_off_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.hp_temp_diff_off = value;
+          publish_request(request);
+        };
+      }
+
+      void set_hp_temp_diff_on_number(Samsung_AC_Number *number)
+      {
+        hp_temp_diff_on_number_ = number;
+        hp_temp_diff_on_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.hp_temp_diff_on = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_booster_heater_switch(Samsung_AC_Switch *switch_)
+      {
+        dhw_booster_heater_ = switch_;
+        dhw_booster_heater_->write_state_ = [this](bool value)
+        {
+          ProtocolRequest request;
+          request.dhw_booster_heater = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_booster_heater_delay_number(Samsung_AC_Number *number)
+      {
+        dhw_booster_heater_delay_number_ = number;
+        dhw_booster_heater_delay_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_booster_heater_delay = (int)value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_booster_heater_overshoot_number(Samsung_AC_Number *number)
+      {
+        dhw_booster_heater_overshoot_number_ = number;
+        dhw_booster_heater_overshoot_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_booster_heater_overshoot = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_disinfection_enable_switch(Samsung_AC_Switch *switch_)
+      {
+        dhw_disinfection_enable_ = switch_;
+        dhw_disinfection_enable_->write_state_ = [this](bool value)
+        {
+          ProtocolRequest request;
+          request.dhw_disinfection_enable = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_forced_operation_timer_select(Samsung_AC_Generic_Select *select)
+      {
+        dhw_forced_operation_timer_select_ = select;
+        dhw_forced_operation_timer_select_->write_state_ = [this](int value)
+        {
+          ProtocolRequest request;
+          request.dhw_forced_operation_timer = value;
+          publish_request(request);
+        };
+      }
+
+      void set_dhw_forced_operation_time_number(Samsung_AC_Number *number)
+      {
+        dhw_forced_operation_time_number_ = number;
+        dhw_forced_operation_time_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.dhw_forced_operation_time = (int)value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_priority_changeover_temp_number(Samsung_AC_Number *number)
+      {
+        heating_priority_changeover_temp_number_ = number;
+        heating_priority_changeover_temp_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_priority_changeover_temp = value;
+          publish_request(request);
+        };
+      }
+
+      void set_heating_dhw_off_outdoor_temp_number(Samsung_AC_Number *number)
+      {
+        heating_dhw_off_outdoor_temp_number_ = number;
+        heating_dhw_off_outdoor_temp_number_->write_state_ = [this](float value)
+        {
+          ProtocolRequest request;
+          request.heating_dhw_off_outdoor_temp = value;
+          publish_request(request);
+        };
+      }
+
       void set_target_temperature_number(Samsung_AC_Number *number)
       {
         target_temperature = number;
@@ -483,6 +783,156 @@ namespace esphome
       {
         if (dhw_disinfection_max_time_number_ != nullptr)
           dhw_disinfection_max_time_number_->publish_state(value);
+      }
+
+      void update_silence_mode(bool value)
+      {
+        if (silence_mode_ != nullptr)
+          silence_mode_->publish_state(value);
+      }
+
+      void update_water_law_target_temp_shift(float value)
+      {
+        if (water_law_target_temp_shift_number_ != nullptr)
+          water_law_target_temp_shift_number_->publish_state(value);
+      }
+
+      void update_heating_water_outlet_upper(float value)
+      {
+        if (heating_water_outlet_upper_number_ != nullptr)
+          heating_water_outlet_upper_number_->publish_state(value);
+      }
+
+      void update_heating_water_outlet_lower(float value)
+      {
+        if (heating_water_outlet_lower_number_ != nullptr)
+          heating_water_outlet_lower_number_->publish_state(value);
+      }
+
+      void update_heating_lower_outdoor_temp(float value)
+      {
+        if (heating_lower_outdoor_temp_number_ != nullptr)
+          heating_lower_outdoor_temp_number_->publish_state(value);
+      }
+
+      void update_heating_upper_outdoor_temp(float value)
+      {
+        if (heating_upper_outdoor_temp_number_ != nullptr)
+          heating_upper_outdoor_temp_number_->publish_state(value);
+      }
+
+      void update_heating_water_temp_cold_outdoor(float value)
+      {
+        if (heating_water_temp_cold_outdoor_number_ != nullptr)
+          heating_water_temp_cold_outdoor_number_->publish_state(value);
+      }
+
+      void update_heating_water_temp_warm_outdoor(float value)
+      {
+        if (heating_water_temp_warm_outdoor_number_ != nullptr)
+          heating_water_temp_warm_outdoor_number_->publish_state(value);
+      }
+
+      void update_heating_dhw_priority(int value)
+      {
+        if (heating_dhw_priority_select_ != nullptr)
+          heating_dhw_priority_select_->publish_state_by_index(value);
+      }
+
+      void update_heating_inverter_pump_application(int value)
+      {
+        if (heating_inverter_pump_application_select_ != nullptr)
+          heating_inverter_pump_application_select_->publish_state_by_index(value);
+      }
+
+      void update_heating_inverter_pump_target_delta(float value)
+      {
+        if (heating_inverter_pump_target_delta_number_ != nullptr)
+          heating_inverter_pump_target_delta_number_->publish_state(value);
+      }
+
+      void update_dhw_tank_temp_upper(float value)
+      {
+        if (dhw_tank_temp_upper_number_ != nullptr)
+          dhw_tank_temp_upper_number_->publish_state(value);
+      }
+
+      void update_dhw_tank_temp_lower(float value)
+      {
+        if (dhw_tank_temp_lower_number_ != nullptr)
+          dhw_tank_temp_lower_number_->publish_state(value);
+      }
+
+      void update_dhw_operation_mode(int value)
+      {
+        if (dhw_operation_mode_select_ != nullptr)
+          dhw_operation_mode_select_->publish_state_by_index(value);
+      }
+
+      void update_hp_max_temp_alone(float value)
+      {
+        if (hp_max_temp_alone_number_ != nullptr)
+          hp_max_temp_alone_number_->publish_state(value);
+      }
+
+      void update_hp_temp_diff_off(float value)
+      {
+        if (hp_temp_diff_off_number_ != nullptr)
+          hp_temp_diff_off_number_->publish_state(value);
+      }
+
+      void update_hp_temp_diff_on(float value)
+      {
+        if (hp_temp_diff_on_number_ != nullptr)
+          hp_temp_diff_on_number_->publish_state(value);
+      }
+
+      void update_dhw_booster_heater(bool value)
+      {
+        if (dhw_booster_heater_ != nullptr)
+          dhw_booster_heater_->publish_state(value);
+      }
+
+      void update_dhw_booster_heater_delay(int value)
+      {
+        if (dhw_booster_heater_delay_number_ != nullptr)
+          dhw_booster_heater_delay_number_->publish_state(value);
+      }
+
+      void update_dhw_booster_heater_overshoot(float value)
+      {
+        if (dhw_booster_heater_overshoot_number_ != nullptr)
+          dhw_booster_heater_overshoot_number_->publish_state(value);
+      }
+
+      void update_dhw_disinfection_enable(bool value)
+      {
+        if (dhw_disinfection_enable_ != nullptr)
+          dhw_disinfection_enable_->publish_state(value);
+      }
+
+      void update_dhw_forced_operation_timer(int value)
+      {
+        if (dhw_forced_operation_timer_select_ != nullptr)
+          dhw_forced_operation_timer_select_->publish_state_by_index(value);
+      }
+
+      void update_dhw_forced_operation_time(int value)
+      {
+        if (dhw_forced_operation_time_number_ != nullptr)
+          dhw_forced_operation_time_number_->publish_state(value);
+      }
+
+      void update_heating_priority_changeover_temp(float value)
+      {
+        if (heating_priority_changeover_temp_number_ != nullptr)
+          heating_priority_changeover_temp_number_->publish_state(value);
+      }
+
+      void update_heating_dhw_off_outdoor_temp(float value)
+      {
+        if (heating_dhw_off_outdoor_temp_number_ != nullptr)
+          heating_dhw_off_outdoor_temp_number_->publish_state(value);
       }
 
       optional<bool> _cur_power;

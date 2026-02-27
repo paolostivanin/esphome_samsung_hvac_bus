@@ -108,6 +108,31 @@ namespace esphome
             virtual void set_dhw_disinfection_target_temp(const std::string address, float value) = 0;
             virtual void set_dhw_disinfection_duration(const std::string address, int value) = 0;
             virtual void set_dhw_disinfection_max_time(const std::string address, int value) = 0;
+            virtual void set_silence_mode(const std::string address, bool value) = 0;
+            virtual void set_water_law_target_temp_shift(const std::string address, float value) = 0;
+            virtual void set_heating_water_outlet_upper(const std::string address, float value) = 0;
+            virtual void set_heating_water_outlet_lower(const std::string address, float value) = 0;
+            virtual void set_heating_lower_outdoor_temp(const std::string address, float value) = 0;
+            virtual void set_heating_upper_outdoor_temp(const std::string address, float value) = 0;
+            virtual void set_heating_water_temp_cold_outdoor(const std::string address, float value) = 0;
+            virtual void set_heating_water_temp_warm_outdoor(const std::string address, float value) = 0;
+            virtual void set_heating_dhw_priority(const std::string address, int value) = 0;
+            virtual void set_heating_inverter_pump_application(const std::string address, int value) = 0;
+            virtual void set_heating_inverter_pump_target_delta(const std::string address, float value) = 0;
+            virtual void set_dhw_tank_temp_upper(const std::string address, float value) = 0;
+            virtual void set_dhw_tank_temp_lower(const std::string address, float value) = 0;
+            virtual void set_dhw_operation_mode(const std::string address, int value) = 0;
+            virtual void set_hp_max_temp_alone(const std::string address, float value) = 0;
+            virtual void set_hp_temp_diff_off(const std::string address, float value) = 0;
+            virtual void set_hp_temp_diff_on(const std::string address, float value) = 0;
+            virtual void set_dhw_booster_heater(const std::string address, bool value) = 0;
+            virtual void set_dhw_booster_heater_delay(const std::string address, int value) = 0;
+            virtual void set_dhw_booster_heater_overshoot(const std::string address, float value) = 0;
+            virtual void set_dhw_disinfection_enable(const std::string address, bool value) = 0;
+            virtual void set_dhw_forced_operation_timer(const std::string address, int value) = 0;
+            virtual void set_dhw_forced_operation_time(const std::string address, int value) = 0;
+            virtual void set_heating_priority_changeover_temp(const std::string address, float value) = 0;
+            virtual void set_heating_dhw_off_outdoor_temp(const std::string address, float value) = 0;
         };
 
         struct ProtocolRequest
@@ -130,6 +155,31 @@ namespace esphome
             optional<float> dhw_disinfection_target_temp;
             optional<int> dhw_disinfection_duration;
             optional<int> dhw_disinfection_max_time;
+            optional<bool> silence_mode;
+            optional<float> water_law_target_temp_shift;
+            optional<float> heating_water_outlet_upper;
+            optional<float> heating_water_outlet_lower;
+            optional<float> heating_lower_outdoor_temp;
+            optional<float> heating_upper_outdoor_temp;
+            optional<float> heating_water_temp_cold_outdoor;
+            optional<float> heating_water_temp_warm_outdoor;
+            optional<int> heating_dhw_priority;
+            optional<int> heating_inverter_pump_application;
+            optional<float> heating_inverter_pump_target_delta;
+            optional<float> dhw_tank_temp_upper;
+            optional<float> dhw_tank_temp_lower;
+            optional<int> dhw_operation_mode;
+            optional<float> hp_max_temp_alone;
+            optional<float> hp_temp_diff_off;
+            optional<float> hp_temp_diff_on;
+            optional<bool> dhw_booster_heater;
+            optional<int> dhw_booster_heater_delay;
+            optional<float> dhw_booster_heater_overshoot;
+            optional<bool> dhw_disinfection_enable;
+            optional<int> dhw_forced_operation_timer;
+            optional<int> dhw_forced_operation_time;
+            optional<float> heating_priority_changeover_temp;
+            optional<float> heating_dhw_off_outdoor_temp;
         };
 
         class Protocol

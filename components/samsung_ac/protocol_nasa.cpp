@@ -631,6 +631,181 @@ namespace esphome
                     packet.messages.push_back(msg);
                 }
 
+                if (request.silence_mode)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_silence_mode);
+                    msg.value = request.silence_mode.value() ? 1 : 0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.water_law_target_temp_shift)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_temp_water_law_target_f);
+                    msg.value = request.water_law_target_temp_shift.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_water_outlet_upper)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_water_outlet_upper);
+                    msg.value = request.heating_water_outlet_upper.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_water_outlet_lower)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_water_outlet_lower);
+                    msg.value = request.heating_water_outlet_lower.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_lower_outdoor_temp)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_lower_outdoor_temp);
+                    msg.value = request.heating_lower_outdoor_temp.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_upper_outdoor_temp)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_upper_outdoor_temp);
+                    msg.value = request.heating_upper_outdoor_temp.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_water_temp_cold_outdoor)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_water_temp_cold_outdoor);
+                    msg.value = request.heating_water_temp_cold_outdoor.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_water_temp_warm_outdoor)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_water_temp_warm_outdoor);
+                    msg.value = request.heating_water_temp_warm_outdoor.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_dhw_priority)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_heating_dhw_priority);
+                    msg.value = request.heating_dhw_priority.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_inverter_pump_application)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_heating_inverter_pump_application);
+                    msg.value = request.heating_inverter_pump_application.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_inverter_pump_target_delta)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_inverter_pump_target_delta);
+                    msg.value = request.heating_inverter_pump_target_delta.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_tank_temp_upper)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_tank_temp_upper);
+                    msg.value = request.dhw_tank_temp_upper.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_tank_temp_lower)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_tank_temp_lower);
+                    msg.value = request.dhw_tank_temp_lower.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_operation_mode)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_dhw_operation_mode);
+                    msg.value = request.dhw_operation_mode.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.hp_max_temp_alone)
+                {
+                    MessageSet msg(MessageNumber::VAR_IN_FSV_3021);
+                    msg.value = request.hp_max_temp_alone.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.hp_temp_diff_off)
+                {
+                    MessageSet msg(MessageNumber::VAR_IN_FSV_3022);
+                    msg.value = request.hp_temp_diff_off.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.hp_temp_diff_on)
+                {
+                    MessageSet msg(MessageNumber::VAR_IN_FSV_3023);
+                    msg.value = request.hp_temp_diff_on.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_booster_heater)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_dhw_booster_heater);
+                    msg.value = request.dhw_booster_heater.value() ? 1 : 0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_booster_heater_delay)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_booster_heater_delay);
+                    msg.value = request.dhw_booster_heater_delay.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_booster_heater_overshoot)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_booster_heater_overshoot);
+                    msg.value = request.dhw_booster_heater_overshoot.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_disinfection_enable)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_dhw_disinfection_enable);
+                    msg.value = request.dhw_disinfection_enable.value() ? 1 : 0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_forced_operation_timer)
+                {
+                    MessageSet msg(MessageNumber::ENUM_in_dhw_forced_operation_timer);
+                    msg.value = request.dhw_forced_operation_timer.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.dhw_forced_operation_time)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_dhw_forced_operation_time);
+                    msg.value = request.dhw_forced_operation_time.value();
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_priority_changeover_temp)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_priority_changeover_temp);
+                    msg.value = request.heating_priority_changeover_temp.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
+                if (request.heating_dhw_off_outdoor_temp)
+                {
+                    MessageSet msg(MessageNumber::VAR_in_heating_dhw_off_outdoor_temp);
+                    msg.value = request.heating_dhw_off_outdoor_temp.value() * 10.0;
+                    packet.messages.push_back(msg);
+                }
+
                 if (packet.messages.size() == 0)
                     continue;
 
@@ -696,6 +871,56 @@ namespace esphome
                 queued.dhw_disinfection_duration = request.dhw_disinfection_duration;
             if (request.dhw_disinfection_max_time)
                 queued.dhw_disinfection_max_time = request.dhw_disinfection_max_time;
+            if (request.silence_mode)
+                queued.silence_mode = request.silence_mode;
+            if (request.water_law_target_temp_shift)
+                queued.water_law_target_temp_shift = request.water_law_target_temp_shift;
+            if (request.heating_water_outlet_upper)
+                queued.heating_water_outlet_upper = request.heating_water_outlet_upper;
+            if (request.heating_water_outlet_lower)
+                queued.heating_water_outlet_lower = request.heating_water_outlet_lower;
+            if (request.heating_lower_outdoor_temp)
+                queued.heating_lower_outdoor_temp = request.heating_lower_outdoor_temp;
+            if (request.heating_upper_outdoor_temp)
+                queued.heating_upper_outdoor_temp = request.heating_upper_outdoor_temp;
+            if (request.heating_water_temp_cold_outdoor)
+                queued.heating_water_temp_cold_outdoor = request.heating_water_temp_cold_outdoor;
+            if (request.heating_water_temp_warm_outdoor)
+                queued.heating_water_temp_warm_outdoor = request.heating_water_temp_warm_outdoor;
+            if (request.heating_dhw_priority)
+                queued.heating_dhw_priority = request.heating_dhw_priority;
+            if (request.heating_inverter_pump_application)
+                queued.heating_inverter_pump_application = request.heating_inverter_pump_application;
+            if (request.heating_inverter_pump_target_delta)
+                queued.heating_inverter_pump_target_delta = request.heating_inverter_pump_target_delta;
+            if (request.dhw_tank_temp_upper)
+                queued.dhw_tank_temp_upper = request.dhw_tank_temp_upper;
+            if (request.dhw_tank_temp_lower)
+                queued.dhw_tank_temp_lower = request.dhw_tank_temp_lower;
+            if (request.dhw_operation_mode)
+                queued.dhw_operation_mode = request.dhw_operation_mode;
+            if (request.hp_max_temp_alone)
+                queued.hp_max_temp_alone = request.hp_max_temp_alone;
+            if (request.hp_temp_diff_off)
+                queued.hp_temp_diff_off = request.hp_temp_diff_off;
+            if (request.hp_temp_diff_on)
+                queued.hp_temp_diff_on = request.hp_temp_diff_on;
+            if (request.dhw_booster_heater)
+                queued.dhw_booster_heater = request.dhw_booster_heater;
+            if (request.dhw_booster_heater_delay)
+                queued.dhw_booster_heater_delay = request.dhw_booster_heater_delay;
+            if (request.dhw_booster_heater_overshoot)
+                queued.dhw_booster_heater_overshoot = request.dhw_booster_heater_overshoot;
+            if (request.dhw_disinfection_enable)
+                queued.dhw_disinfection_enable = request.dhw_disinfection_enable;
+            if (request.dhw_forced_operation_timer)
+                queued.dhw_forced_operation_timer = request.dhw_forced_operation_timer;
+            if (request.dhw_forced_operation_time)
+                queued.dhw_forced_operation_time = request.dhw_forced_operation_time;
+            if (request.heating_priority_changeover_temp)
+                queued.heating_priority_changeover_temp = request.heating_priority_changeover_temp;
+            if (request.heating_dhw_off_outdoor_temp)
+                queued.heating_dhw_off_outdoor_temp = request.heating_dhw_off_outdoor_temp;
         }
 
         Mode operation_mode_to_mode(int value)
@@ -1031,22 +1256,170 @@ namespace esphome
                 target->set_dhw_disinfection_max_time(source, message.value);
                 break;
             }
+            case MessageNumber::ENUM_in_silence_mode:
+            {
+                LOG_MESSAGE(ENUM_in_silence_mode, (double)message.value, source, dest);
+                target->set_silence_mode(source, message.value != 0);
+                break;
+            }
+            case MessageNumber::VAR_in_temp_water_law_target_f:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_temp_water_law_target_f, temp, source, dest);
+                target->set_water_law_target_temp_shift(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_water_outlet_upper:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_heating_water_outlet_upper, temp, source, dest);
+                target->set_heating_water_outlet_upper(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_water_outlet_lower:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_heating_water_outlet_lower, temp, source, dest);
+                target->set_heating_water_outlet_lower(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_lower_outdoor_temp:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_heating_lower_outdoor_temp, temp, source, dest);
+                target->set_heating_lower_outdoor_temp(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_upper_outdoor_temp:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_heating_upper_outdoor_temp, temp, source, dest);
+                target->set_heating_upper_outdoor_temp(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_water_temp_cold_outdoor:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_heating_water_temp_cold_outdoor, temp, source, dest);
+                target->set_heating_water_temp_cold_outdoor(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_water_temp_warm_outdoor:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_heating_water_temp_warm_outdoor, temp, source, dest);
+                target->set_heating_water_temp_warm_outdoor(source, temp);
+                break;
+            }
+            case MessageNumber::ENUM_in_heating_dhw_priority:
+            {
+                LOG_MESSAGE(ENUM_in_heating_dhw_priority, (double)message.value, source, dest);
+                target->set_heating_dhw_priority(source, message.value);
+                break;
+            }
+            case MessageNumber::ENUM_in_heating_inverter_pump_application:
+            {
+                LOG_MESSAGE(ENUM_in_heating_inverter_pump_application, (double)message.value, source, dest);
+                target->set_heating_inverter_pump_application(source, message.value);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_inverter_pump_target_delta:
+            {
+                double temp = (double)message.value / 10.0;
+                LOG_MESSAGE(VAR_in_heating_inverter_pump_target_delta, temp, source, dest);
+                target->set_heating_inverter_pump_target_delta(source, temp);
+                break;
+            }
             case MessageNumber::VAR_IN_FSV_3021:
             {
                 double value = (double)message.value / 10.0;
                 LOG_MESSAGE(VAR_IN_FSV_3021, value, source, dest);
+                target->set_hp_max_temp_alone(source, value);
                 break;
             }
             case MessageNumber::VAR_IN_FSV_3022:
             {
                 double value = (double)message.value / 10.0;
                 LOG_MESSAGE(VAR_IN_FSV_3022, value, source, dest);
+                target->set_hp_temp_diff_off(source, value);
                 break;
             }
             case MessageNumber::VAR_IN_FSV_3023:
             {
                 double value = (double)message.value / 10.0;
                 LOG_MESSAGE(VAR_IN_FSV_3023, value, source, dest);
+                target->set_hp_temp_diff_on(source, value);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_tank_temp_upper:
+            {
+                double temp = (double)message.value / 10.0;
+                LOG_MESSAGE(VAR_in_dhw_tank_temp_upper, temp, source, dest);
+                target->set_dhw_tank_temp_upper(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_tank_temp_lower:
+            {
+                double temp = (double)message.value / 10.0;
+                LOG_MESSAGE(VAR_in_dhw_tank_temp_lower, temp, source, dest);
+                target->set_dhw_tank_temp_lower(source, temp);
+                break;
+            }
+            case MessageNumber::ENUM_in_dhw_operation_mode:
+            {
+                LOG_MESSAGE(ENUM_in_dhw_operation_mode, (double)message.value, source, dest);
+                target->set_dhw_operation_mode(source, message.value);
+                break;
+            }
+            case MessageNumber::ENUM_in_dhw_booster_heater:
+            {
+                LOG_MESSAGE(ENUM_in_dhw_booster_heater, (double)message.value, source, dest);
+                target->set_dhw_booster_heater(source, message.value != 0);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_booster_heater_delay:
+            {
+                LOG_MESSAGE(VAR_in_dhw_booster_heater_delay, (double)message.value, source, dest);
+                target->set_dhw_booster_heater_delay(source, message.value);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_booster_heater_overshoot:
+            {
+                double temp = (double)message.value / 10.0;
+                LOG_MESSAGE(VAR_in_dhw_booster_heater_overshoot, temp, source, dest);
+                target->set_dhw_booster_heater_overshoot(source, temp);
+                break;
+            }
+            case MessageNumber::ENUM_in_dhw_disinfection_enable:
+            {
+                LOG_MESSAGE(ENUM_in_dhw_disinfection_enable, (double)message.value, source, dest);
+                target->set_dhw_disinfection_enable(source, message.value != 0);
+                break;
+            }
+            case MessageNumber::ENUM_in_dhw_forced_operation_timer:
+            {
+                LOG_MESSAGE(ENUM_in_dhw_forced_operation_timer, (double)message.value, source, dest);
+                target->set_dhw_forced_operation_timer(source, message.value);
+                break;
+            }
+            case MessageNumber::VAR_in_dhw_forced_operation_time:
+            {
+                LOG_MESSAGE(VAR_in_dhw_forced_operation_time, (double)message.value, source, dest);
+                target->set_dhw_forced_operation_time(source, message.value);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_priority_changeover_temp:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_heating_priority_changeover_temp, temp, source, dest);
+                target->set_heating_priority_changeover_temp(source, temp);
+                break;
+            }
+            case MessageNumber::VAR_in_heating_dhw_off_outdoor_temp:
+            {
+                double temp = (double)((int16_t)message.value) / 10.0;
+                LOG_MESSAGE(VAR_in_heating_dhw_off_outdoor_temp, temp, source, dest);
+                target->set_heating_dhw_off_outdoor_temp(source, temp);
                 break;
             }
 

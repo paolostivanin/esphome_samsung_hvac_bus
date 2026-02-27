@@ -123,6 +123,37 @@ CONF_DEVICE_DHW_DISINFECTION_START_TIME = "dhw_disinfection_start_time"
 CONF_DEVICE_DHW_DISINFECTION_TARGET_TEMP = "dhw_disinfection_target_temp"
 CONF_DEVICE_DHW_DISINFECTION_DURATION = "dhw_disinfection_duration"
 CONF_DEVICE_DHW_DISINFECTION_MAX_TIME = "dhw_disinfection_max_time"
+CONF_DEVICE_SILENCE_MODE = "silence_mode"
+CONF_DEVICE_WATER_LAW_TARGET_FLOW_TEMP = "water_law_target_flow_temp"
+CONF_DEVICE_WATER_LAW_TARGET_TEMP_SHIFT = "water_law_target_temp_shift"
+CONF_DEVICE_WATER_PUMP_STATUS = "water_pump_status"
+CONF_DEVICE_INDOOR_POWER_CONSUMPTION = "indoor_power_consumption"
+CONF_DEVICE_GENERATED_POWER_LAST_MINUTE = "generated_power_last_minute"
+CONF_DEVICE_DEFROST_STATUS = "defrost_status"
+CONF_DEVICE_BOOSTER_HEATER_STATUS = "booster_heater_status"
+CONF_DEVICE_HEATING_WATER_OUTLET_UPPER = "heating_water_outlet_temp_upper"
+CONF_DEVICE_HEATING_WATER_OUTLET_LOWER = "heating_water_outlet_temp_lower"
+CONF_DEVICE_HEATING_LOWER_OUTDOOR_TEMP = "heating_lower_outdoor_temp"
+CONF_DEVICE_HEATING_UPPER_OUTDOOR_TEMP = "heating_upper_outdoor_temp"
+CONF_DEVICE_HEATING_WATER_TEMP_COLD_OUTDOOR = "heating_water_temp_cold_outdoor"
+CONF_DEVICE_HEATING_WATER_TEMP_WARM_OUTDOOR = "heating_water_temp_warm_outdoor"
+CONF_DEVICE_HEATING_DHW_PRIORITY = "heating_dhw_priority"
+CONF_DEVICE_HEATING_INVERTER_PUMP_APPLICATION = "heating_inverter_pump_application"
+CONF_DEVICE_HEATING_INVERTER_PUMP_TARGET_DELTA = "heating_inverter_pump_target_delta"
+CONF_DEVICE_DHW_TANK_TEMP_UPPER = "dhw_tank_temp_upper"
+CONF_DEVICE_DHW_TANK_TEMP_LOWER = "dhw_tank_temp_lower"
+CONF_DEVICE_DHW_OPERATION_MODE = "dhw_operation_mode"
+CONF_DEVICE_HP_MAX_TEMP_ALONE = "hp_max_temp_alone"
+CONF_DEVICE_HP_TEMP_DIFF_OFF = "hp_temp_diff_off"
+CONF_DEVICE_HP_TEMP_DIFF_ON = "hp_temp_diff_on"
+CONF_DEVICE_DHW_BOOSTER_HEATER = "dhw_booster_heater"
+CONF_DEVICE_DHW_BOOSTER_HEATER_DELAY = "dhw_booster_heater_delay"
+CONF_DEVICE_DHW_BOOSTER_HEATER_OVERSHOOT = "dhw_booster_heater_overshoot"
+CONF_DEVICE_DHW_DISINFECTION_ENABLE = "dhw_disinfection_enable"
+CONF_DEVICE_DHW_FORCED_OPERATION_TIMER = "dhw_forced_operation_timer"
+CONF_DEVICE_DHW_FORCED_OPERATION_TIME = "dhw_forced_operation_time"
+CONF_DEVICE_HEATING_PRIORITY_CHANGEOVER_TEMP = "heating_priority_changeover_temp"
+CONF_DEVICE_HEATING_DHW_OFF_OUTDOOR_TEMP = "heating_dhw_off_outdoor_temp"
 
 
 def preset_entry(name: str, value: int, displayName: str):
@@ -374,6 +405,80 @@ DEVICE_SCHEMA = cv.Schema(
         cv.Optional(CONF_DEVICE_DHW_DISINFECTION_TARGET_TEMP): NUMBER_SCHEMA,
         cv.Optional(CONF_DEVICE_DHW_DISINFECTION_DURATION): NUMBER_SCHEMA,
         cv.Optional(CONF_DEVICE_DHW_DISINFECTION_MAX_TIME): NUMBER_SCHEMA,
+        # Read-only sensors
+        cv.Optional(CONF_DEVICE_WATER_LAW_TARGET_FLOW_TEMP): temperature_sensor_schema(0x427F),
+        cv.Optional(CONF_DEVICE_INDOOR_POWER_CONSUMPTION): custom_sensor_schema(
+            message=0x4284,
+            unit_of_measurement=UNIT_WATT,
+            accuracy_decimals=0,
+            device_class=DEVICE_CLASS_POWER,
+            state_class=STATE_CLASS_MEASUREMENT,
+            icon="mdi:flash",
+        ),
+        cv.Optional(CONF_DEVICE_GENERATED_POWER_LAST_MINUTE): custom_sensor_schema(
+            message=0x4426,
+            unit_of_measurement="kWh",
+            accuracy_decimals=3,
+            device_class=DEVICE_CLASS_ENERGY,
+            state_class=STATE_CLASS_TOTAL_INCREASING,
+            icon="mdi:counter",
+            raw_filters=[{"multiply": 0.001}],
+        ),
+        cv.Optional(CONF_DEVICE_DEFROST_STATUS): custom_sensor_schema(
+            message=0x402E,
+            accuracy_decimals=0,
+            icon="mdi:snowflake-melt",
+        ),
+        cv.Optional(CONF_DEVICE_WATER_PUMP_STATUS): custom_sensor_schema(
+            message=0x4089,
+            accuracy_decimals=0,
+            icon="mdi:water-pump",
+        ),
+        cv.Optional(CONF_DEVICE_BOOSTER_HEATER_STATUS): custom_sensor_schema(
+            message=0x4087,
+            accuracy_decimals=0,
+            icon="mdi:fire",
+        ),
+        # Writable switch
+        cv.Optional(CONF_DEVICE_SILENCE_MODE): switch.switch_schema(
+            Samsung_AC_Switch, icon="mdi:volume-off"
+        ),
+        # Writable numbers
+        cv.Optional(CONF_DEVICE_WATER_LAW_TARGET_TEMP_SHIFT): NUMBER_SCHEMA,
+        # Heating water law curve / limits
+        cv.Optional(CONF_DEVICE_HEATING_WATER_OUTLET_UPPER): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_HEATING_WATER_OUTLET_LOWER): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_HEATING_LOWER_OUTDOOR_TEMP): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_HEATING_UPPER_OUTDOOR_TEMP): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_HEATING_WATER_TEMP_COLD_OUTDOOR): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_HEATING_WATER_TEMP_WARM_OUTDOOR): NUMBER_SCHEMA,
+        # Heating selects
+        cv.Optional(CONF_DEVICE_HEATING_DHW_PRIORITY): SELECT_GENERIC_SCHEMA,
+        cv.Optional(CONF_DEVICE_HEATING_INVERTER_PUMP_APPLICATION): SELECT_GENERIC_SCHEMA,
+        # Heating inverter pump target delta
+        cv.Optional(CONF_DEVICE_HEATING_INVERTER_PUMP_TARGET_DELTA): NUMBER_SCHEMA,
+        # DHW tank temp limits
+        cv.Optional(CONF_DEVICE_DHW_TANK_TEMP_UPPER): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_TANK_TEMP_LOWER): NUMBER_SCHEMA,
+        # DHW operation mode / booster / disinfection enable / forced operation
+        cv.Optional(CONF_DEVICE_DHW_OPERATION_MODE): SELECT_GENERIC_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_BOOSTER_HEATER): switch.switch_schema(
+            Samsung_AC_Switch, icon="mdi:fire"
+        ),
+        cv.Optional(CONF_DEVICE_DHW_BOOSTER_HEATER_DELAY): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_BOOSTER_HEATER_OVERSHOOT): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_DISINFECTION_ENABLE): switch.switch_schema(
+            Samsung_AC_Switch, icon="mdi:bacteria"
+        ),
+        cv.Optional(CONF_DEVICE_DHW_FORCED_OPERATION_TIMER): SELECT_GENERIC_SCHEMA,
+        cv.Optional(CONF_DEVICE_DHW_FORCED_OPERATION_TIME): NUMBER_SCHEMA,
+        # HP settings
+        cv.Optional(CONF_DEVICE_HP_MAX_TEMP_ALONE): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_HP_TEMP_DIFF_OFF): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_HP_TEMP_DIFF_ON): NUMBER_SCHEMA,
+        # Heating priority changeover / DHW OFF outdoor temp
+        cv.Optional(CONF_DEVICE_HEATING_PRIORITY_CHANGEOVER_TEMP): NUMBER_SCHEMA,
+        cv.Optional(CONF_DEVICE_HEATING_DHW_OFF_OUTDOOR_TEMP): NUMBER_SCHEMA,
     }
 )
 
@@ -385,6 +490,12 @@ CUSTOM_SENSOR_KEYS = [
     CONF_DEVICE_PHE_OUT_WATER_OUT,
     CONF_DEVICE_PHE_IN_WATER_RETURN,
     CONF_DEVICE_WATER_FLOW,
+    CONF_DEVICE_WATER_LAW_TARGET_FLOW_TEMP,
+    CONF_DEVICE_INDOOR_POWER_CONSUMPTION,
+    CONF_DEVICE_GENERATED_POWER_LAST_MINUTE,
+    CONF_DEVICE_DEFROST_STATUS,
+    CONF_DEVICE_WATER_PUMP_STATUS,
+    CONF_DEVICE_BOOSTER_HEATER_STATUS,
 ]
 
 CONF_DEVICES = "devices"
@@ -517,6 +628,18 @@ async def to_code(config):
                 switch.new_switch,
                 var_dev.set_water_heater_power_switch,
             ),
+            CONF_DEVICE_SILENCE_MODE: (
+                switch.new_switch,
+                var_dev.set_silence_mode_switch,
+            ),
+            CONF_DEVICE_DHW_BOOSTER_HEATER: (
+                switch.new_switch,
+                var_dev.set_dhw_booster_heater_switch,
+            ),
+            CONF_DEVICE_DHW_DISINFECTION_ENABLE: (
+                switch.new_switch,
+                var_dev.set_dhw_disinfection_enable_switch,
+            ),
             CONF_DEVICE_ROOM_TEMPERATURE: (
                 sensor.new_sensor,
                 var_dev.set_room_temperature_sensor,
@@ -637,23 +760,205 @@ async def to_code(config):
             conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
             conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
             num = await number.new_number(
-                conf, min_value=40.0, max_value=80.0, step=1.0
+                conf, min_value=40.0, max_value=70.0, step=5.0
             )
             cg.add(var_dev.set_dhw_disinfection_target_temp_number(num))
 
         if CONF_DEVICE_DHW_DISINFECTION_DURATION in device:
             conf = device[CONF_DEVICE_DHW_DISINFECTION_DURATION]
             num = await number.new_number(
-                conf, min_value=0, max_value=120, step=1
+                conf, min_value=5, max_value=60, step=5
             )
             cg.add(var_dev.set_dhw_disinfection_duration_number(num))
 
         if CONF_DEVICE_DHW_DISINFECTION_MAX_TIME in device:
             conf = device[CONF_DEVICE_DHW_DISINFECTION_MAX_TIME]
             num = await number.new_number(
-                conf, min_value=0, max_value=1440, step=1
+                conf, min_value=60, max_value=1440, step=60
             )
             cg.add(var_dev.set_dhw_disinfection_max_time_number(num))
+
+        if CONF_DEVICE_WATER_LAW_TARGET_TEMP_SHIFT in device:
+            conf = device[CONF_DEVICE_WATER_LAW_TARGET_TEMP_SHIFT]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=-5.0, max_value=5.0, step=0.5
+            )
+            cg.add(var_dev.set_water_law_target_temp_shift_number(num))
+
+        if CONF_DEVICE_HEATING_WATER_OUTLET_UPPER in device:
+            conf = device[CONF_DEVICE_HEATING_WATER_OUTLET_UPPER]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=37.0, max_value=70.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_water_outlet_upper_number(num))
+
+        if CONF_DEVICE_HEATING_WATER_OUTLET_LOWER in device:
+            conf = device[CONF_DEVICE_HEATING_WATER_OUTLET_LOWER]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=15.0, max_value=37.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_water_outlet_lower_number(num))
+
+        if CONF_DEVICE_HEATING_LOWER_OUTDOOR_TEMP in device:
+            conf = device[CONF_DEVICE_HEATING_LOWER_OUTDOOR_TEMP]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=-20.0, max_value=5.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_lower_outdoor_temp_number(num))
+
+        if CONF_DEVICE_HEATING_UPPER_OUTDOOR_TEMP in device:
+            conf = device[CONF_DEVICE_HEATING_UPPER_OUTDOOR_TEMP]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=10.0, max_value=20.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_upper_outdoor_temp_number(num))
+
+        if CONF_DEVICE_HEATING_WATER_TEMP_COLD_OUTDOOR in device:
+            conf = device[CONF_DEVICE_HEATING_WATER_TEMP_COLD_OUTDOOR]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=17.0, max_value=65.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_water_temp_cold_outdoor_number(num))
+
+        if CONF_DEVICE_HEATING_WATER_TEMP_WARM_OUTDOOR in device:
+            conf = device[CONF_DEVICE_HEATING_WATER_TEMP_WARM_OUTDOOR]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=17.0, max_value=65.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_water_temp_warm_outdoor_number(num))
+
+        if CONF_DEVICE_HEATING_DHW_PRIORITY in device:
+            conf = device[CONF_DEVICE_HEATING_DHW_PRIORITY]
+            values = ["DHW", "Heating"]
+            sel = await select.new_select(conf, options=values)
+            cg.add(var_dev.set_heating_dhw_priority_select(sel))
+
+        if CONF_DEVICE_HEATING_INVERTER_PUMP_APPLICATION in device:
+            conf = device[CONF_DEVICE_HEATING_INVERTER_PUMP_APPLICATION]
+            values = ["No", "100%", "70%"]
+            sel = await select.new_select(conf, options=values)
+            cg.add(var_dev.set_heating_inverter_pump_application_select(sel))
+
+        if CONF_DEVICE_HEATING_INVERTER_PUMP_TARGET_DELTA in device:
+            conf = device[CONF_DEVICE_HEATING_INVERTER_PUMP_TARGET_DELTA]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=2.0, max_value=8.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_inverter_pump_target_delta_number(num))
+
+        if CONF_DEVICE_DHW_TANK_TEMP_UPPER in device:
+            conf = device[CONF_DEVICE_DHW_TANK_TEMP_UPPER]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=50.0, max_value=70.0, step=1.0
+            )
+            cg.add(var_dev.set_dhw_tank_temp_upper_number(num))
+
+        if CONF_DEVICE_DHW_TANK_TEMP_LOWER in device:
+            conf = device[CONF_DEVICE_DHW_TANK_TEMP_LOWER]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=30.0, max_value=40.0, step=1.0
+            )
+            cg.add(var_dev.set_dhw_tank_temp_lower_number(num))
+
+        if CONF_DEVICE_DHW_OPERATION_MODE in device:
+            conf = device[CONF_DEVICE_DHW_OPERATION_MODE]
+            values = ["Off", "Thermo ON/OFF", "On demand"]
+            sel = await select.new_select(conf, options=values)
+            cg.add(var_dev.set_dhw_operation_mode_select(sel))
+
+        if CONF_DEVICE_HP_MAX_TEMP_ALONE in device:
+            conf = device[CONF_DEVICE_HP_MAX_TEMP_ALONE]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=45.0, max_value=55.0, step=1.0
+            )
+            cg.add(var_dev.set_hp_max_temp_alone_number(num))
+
+        if CONF_DEVICE_HP_TEMP_DIFF_OFF in device:
+            conf = device[CONF_DEVICE_HP_TEMP_DIFF_OFF]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=0.0, max_value=10.0, step=1.0
+            )
+            cg.add(var_dev.set_hp_temp_diff_off_number(num))
+
+        if CONF_DEVICE_HP_TEMP_DIFF_ON in device:
+            conf = device[CONF_DEVICE_HP_TEMP_DIFF_ON]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=5.0, max_value=30.0, step=1.0
+            )
+            cg.add(var_dev.set_hp_temp_diff_on_number(num))
+
+        if CONF_DEVICE_DHW_BOOSTER_HEATER_DELAY in device:
+            conf = device[CONF_DEVICE_DHW_BOOSTER_HEATER_DELAY]
+            num = await number.new_number(
+                conf, min_value=20, max_value=95, step=5
+            )
+            cg.add(var_dev.set_dhw_booster_heater_delay_number(num))
+
+        if CONF_DEVICE_DHW_BOOSTER_HEATER_OVERSHOOT in device:
+            conf = device[CONF_DEVICE_DHW_BOOSTER_HEATER_OVERSHOOT]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=0.0, max_value=4.0, step=1.0
+            )
+            cg.add(var_dev.set_dhw_booster_heater_overshoot_number(num))
+
+        if CONF_DEVICE_DHW_FORCED_OPERATION_TIMER in device:
+            conf = device[CONF_DEVICE_DHW_FORCED_OPERATION_TIMER]
+            values = ["No timer", "Timer"]
+            sel = await select.new_select(conf, options=values)
+            cg.add(var_dev.set_dhw_forced_operation_timer_select(sel))
+
+        if CONF_DEVICE_DHW_FORCED_OPERATION_TIME in device:
+            conf = device[CONF_DEVICE_DHW_FORCED_OPERATION_TIME]
+            num = await number.new_number(
+                conf, min_value=3, max_value=30, step=1
+            )
+            cg.add(var_dev.set_dhw_forced_operation_time_number(num))
+
+        if CONF_DEVICE_HEATING_PRIORITY_CHANGEOVER_TEMP in device:
+            conf = device[CONF_DEVICE_HEATING_PRIORITY_CHANGEOVER_TEMP]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=-15.0, max_value=20.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_priority_changeover_temp_number(num))
+
+        if CONF_DEVICE_HEATING_DHW_OFF_OUTDOOR_TEMP in device:
+            conf = device[CONF_DEVICE_HEATING_DHW_OFF_OUTDOOR_TEMP]
+            conf[CONF_UNIT_OF_MEASUREMENT] = UNIT_CELSIUS
+            conf[CONF_DEVICE_CLASS] = DEVICE_CLASS_TEMPERATURE
+            num = await number.new_number(
+                conf, min_value=14.0, max_value=35.0, step=1.0
+            )
+            cg.add(var_dev.set_heating_dhw_off_outdoor_temp_number(num))
 
         if CONF_DEVICE_CLIMATE in device:
             conf = device[CONF_DEVICE_CLIMATE]
